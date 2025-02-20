@@ -6,8 +6,8 @@ La transformada de Hough sirve para detectar líneas rectas, incluso si están c
 
 A partir del siguiente código, modifica los parámetros de la transformada de Hoguh de manera que se obtengan las líneas continuas deseadas para cada caso. Muestra tus resultados, anota los parámetros que usaste y justifica los cambios. Posteriormente, responde las siguientes preguntas:
 
-1. ¿Qué es el parámetro *$\rho$*?
-2. ¿Qué es el parámetro *$\theta$*?
+1. ¿Qué es el parámetro *ρ* (rho)?
+2. ¿Qué es el parámetro *θ* (theta)?
 3. ¿Qué es el parámetro *threshold*?
 3. ¿Qué es el parámetro *minLineLength*?
 3. ¿Qué es el parámetro *maxLineGap*?
