@@ -15,10 +15,15 @@ A partir del siguiente código, modifica los parámetros de la transformada de H
 NOTA: Para cada caso se presentan dos imágenes. la imagen con las líneas coloreadas es el resultado que se espera obtener.
 
 ```python
+# pyright: strict
+
 import cv2
+from cv2.typing import MatLike
 import sys
 import numpy as np
 from typing import NamedTuple
+
+LineLike = np.ndarray[tuple[int, int, int, int], np.dtype[np.int_]]
 
 colors = [
     (0, 0, 255),
@@ -29,14 +34,14 @@ colors = [
     (0, 255, 255),
 ]
 
-def out(name):
+def out_name(name: str) -> str:
     i = name.rfind('.')
     return name[:i] + '-out' + name[i:]
 
 class HoughParams(NamedTuple):
     rho: float
     theta: float
-    threshold: float
+    threshold: int
     minLineLength: float
     maxLineGap: float
 
@@ -44,8 +49,8 @@ class LineDetector:
     def __init__(self):
         pass
 
-    def lines_too_close(self, a, b, threshold):
-        def dist(x1, y1, x2, y2):
+    def lines_too_close(self, a: LineLike, b: LineLike, threshold: float):
+        def dist(x1: int, y1: int, x2: int, y2: int) -> float:
             return ((x2 - x1)**2 + (y2 - y1)**2)**0.5
 
         ax1, ay1, ax2, ay2 = a
@@ -61,7 +66,7 @@ class LineDetector:
             )
         )
 
-    def cleanup(self, lines):
+    def cleanup(self, lines: MatLike):
         while True:
             change = False
 
@@ -82,17 +87,24 @@ class LineDetector:
 
     def detect(
         self,
-        source,
-        hough_params,
-        canny_thresholds = (70, 60),
-        show_image = True,
-        save_image = False,
+        source: MatLike,
+        hough_params: HoughParams,
+        show_image: bool = True,
+        save_image: bool = False,
     ):
         out = source.copy()
         gray = cv2.cvtColor(source, cv2.COLOR_BGR2GRAY)
-        edges = cv2.Canny(gray, *canny_thresholds)
+        edges = cv2.Canny(gray, 70, 60)
 
-        lines = cv2.HoughLinesP(edges, *hough_params)
+        rho, theta, threshold, minLineLength, maxLineGap = [*hough_params]
+        lines = cv2.HoughLinesP(
+            edges,
+            rho,
+            theta,
+            int(threshold),
+            minLineLength=minLineLength,
+            maxLineGap=maxLineGap,
+        )
         lines = self.cleanup(lines)
 
         i = 0
@@ -106,7 +118,7 @@ class LineDetector:
             cv2.waitKey(0)
 
         if save_image:
-            cv2.imwrite(out(sys.argv[1], out))
+            cv2.imwrite(out_name(sys.argv[1]), out)
 
 if __name__ == '__main__':
     ld = LineDetector()
