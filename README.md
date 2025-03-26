@@ -1,4 +1,4 @@
-# Práctica #: Transformada de Hough
+# Práctica: Transformada de Hough
 
 La transformada de Hough sirve para detectar líneas rectas, incluso si están cortadas. A continuación se presentan una serie de casos de prueba con los que se explorará la transformada de Hough.
 
