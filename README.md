@@ -15,8 +15,6 @@ A partir del siguiente código, modifica los parámetros de la transformada de H
 NOTA: Para cada caso se presentan dos imágenes. la imagen con las líneas coloreadas es el resultado que se espera obtener.
 
 ```python
-# pyright: strict
-
 import cv2
 from cv2.typing import MatLike
 import sys
