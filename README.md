@@ -189,6 +189,10 @@ if __name__ == '__main__':
 
     ld.detect(source, params)
 ```
+El script anterior se puede ejecutar de la siguiente manera:
+```bash
+$ python hough.py ejemplo.jpg
+```
 
 ## Caso 1
 
